@@ -20,6 +20,7 @@ import tw.waterball.judgegirl.entities.problem.JudgeEnv;
 import tw.waterball.judgegirl.entities.problem.JudgeEnvSpec;
 import tw.waterball.judgegirl.entities.problem.Language;
 import tw.waterball.judgegirl.entities.problem.Problem;
+import tw.waterball.judgegirl.migration.problem.MigrateOneProblem;
 import tw.waterball.judgegirl.plugins.api.match.JudgeGirlMatchPolicyPlugin;
 
 import java.util.List;
@@ -33,9 +34,9 @@ import static java.lang.String.format;
 /**
  * @author - johnny850807@gmail.com (Waterball)
  */
-@ConditionalOnMissingBean(InputStrategy.class)
+@ConditionalOnMissingBean(MigrateOneProblem.InputStrategy.class)
 @Component
-public class ScannerInputStrategy implements InputStrategy {
+public class ScannerInputStrategy implements MigrateOneProblem.InputStrategy {
     @Override
     public String problemDirPath() {
         return Inputs.inputLine("Input the problem directory path: ");

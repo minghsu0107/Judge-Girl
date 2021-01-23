@@ -13,11 +13,13 @@
 
 package tw.waterball.judgegirl.plugins.api;
 
-import tw.waterball.judgegirl.entities.submission.Submission;
+import tw.waterball.judgegirl.entities.problem.JudgePluginTag;
 
 /**
  * @author - johnny850807@gmail.com (Waterball)
  */
-public interface SubmissionAware {
-    void setSubmission(Submission submission);
+public abstract class AbstractJudgeSourceCodeFilter
+        extends AbstractJudgeGirlPlugin implements JudgeSourceCodeFilter {
+    protected final JudgePluginTag.Type type = JudgePluginTag.Type.FILTER;
+
 }

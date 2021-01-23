@@ -25,9 +25,9 @@ import tw.waterball.judgegirl.entities.submission.VerdictIssuer;
 import tw.waterball.judgegirl.judger.CCJudger;
 import tw.waterball.judgegirl.judger.DefaultCCJudgerFactory;
 import tw.waterball.judgegirl.plugins.api.AbstractJudgeGirlPlugin;
-import tw.waterball.judgegirl.plugins.api.JudgeGirlVerdictFilterPlugin;
-import tw.waterball.judgegirl.plugins.api.codeinspection.JudgeGirlSourceCodeFilterPlugin;
-import tw.waterball.judgegirl.plugins.impl.match.AllMatchPolicyPlugin;
+import tw.waterball.judgegirl.plugins.api.JudgeVerdictFilter;
+import tw.waterball.judgegirl.plugins.api.JudgeSourceCodeFilter;
+import tw.waterball.judgegirl.plugins.impl.match.AllMatchPolicy;
 import tw.waterball.judgegirl.problemapi.clients.ProblemServiceDriver;
 import tw.waterball.judgegirl.problemapi.views.ProblemView;
 import tw.waterball.judgegirl.submissionapi.clients.SubmissionServiceDriver;
@@ -55,7 +55,7 @@ public class JudgeGirlFilterPluginTest {
     private final static String zippedProvidedCodesFileName = "/judgeCases/prefixsum/provided.zip";
     private final static String zippedTestcaseIOsFileName = "/judgeCases/prefixsum/io.zip";
     private final static String zippedSubmittedCodesFileNameFormat = "/judgeCases/prefixsum/%s/submitted.zip";
-    private final static TestFilterPlugin filterPlugin = new TestFilterPlugin();
+    private final static TestFilterJudgeJudge filterPlugin = new TestFilterJudgeJudge();
     ;
     private static int problemId = 1;
     private static int studentId = 1;
@@ -69,7 +69,7 @@ public class JudgeGirlFilterPluginTest {
             .id(problemId).title("Prefix Sum")
             .markdownDescription("Ignored")
             .judgeEnvSpec(judgeEnvSpec)
-            .outputMatchPolicyPluginTag(AllMatchPolicyPlugin.TAG)
+            .outputMatchPolicyPluginTag(AllMatchPolicy.TAG)
             .tag("Ignored")
             .filterPluginTag(filterPlugin.getTag())
             .submittedCodeSpec(new SubmittedCodeSpec(Language.C, "prefixsum-seq.c"))
@@ -152,8 +152,8 @@ public class JudgeGirlFilterPluginTest {
         return argumentCaptor.getValue();
     }
 
-    public static class TestFilterPlugin extends AbstractJudgeGirlPlugin
-            implements JudgeGirlSourceCodeFilterPlugin, JudgeGirlVerdictFilterPlugin {
+    public static class TestFilterJudgeJudge extends AbstractJudgeGirlPlugin
+            implements JudgeSourceCodeFilter, JudgeVerdictFilter {
         public boolean hasBeenInvokedSourceCodeFilter;
         public boolean hasBeenInvokedVerdictFilter;
         public Report report = new Report("TestReport",

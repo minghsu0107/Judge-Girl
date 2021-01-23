@@ -14,13 +14,15 @@
 package tw.waterball.judgegirl.plugins.api;
 
 import tw.waterball.judgegirl.entities.problem.JudgePluginTag;
-import tw.waterball.judgegirl.plugins.api.codeinspection.JudgeGirlSourceCodeFilterPlugin;
+import tw.waterball.judgegirl.entities.submission.VerdictIssuer;
 
 /**
+ * The filter that add new runtime behaviors and modify some parts of the verdict.
+ * The filter method will be invoked after the testcases execution and output matching has been completed.
  * @author - johnny850807@gmail.com (Waterball)
  */
-public abstract class AbstractJudgeGirlSourceCodeFilterPlugin
-        extends AbstractJudgeGirlPlugin implements JudgeGirlSourceCodeFilterPlugin {
-    protected final JudgePluginTag.Type type = JudgePluginTag.Type.FILTER;
+public interface JudgeVerdictFilter extends JudgeGirlPlugin {
+    JudgePluginTag.Type TYPE = JudgePluginTag.Type.FILTER;
 
+    void filter(VerdictIssuer verdictIssuer);
 }

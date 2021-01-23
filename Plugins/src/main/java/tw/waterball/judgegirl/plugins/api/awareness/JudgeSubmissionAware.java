@@ -11,18 +11,15 @@
  *   limitations under the License.
  */
 
-package tw.waterball.judgegirl.plugins.api;
+package tw.waterball.judgegirl.plugins.api.awareness;
 
-import tw.waterball.judgegirl.entities.problem.JudgePluginTag;
-import tw.waterball.judgegirl.entities.submission.VerdictIssuer;
+import tw.waterball.judgegirl.entities.submission.Submission;
 
 /**
- * The filter that add new runtime behaviors and modify some parts of the verdict.
- * The filter method will be invoked after the testcases execution and output matching has been completed.
+ * The JudgeGirlPlugin that inherits this interface
+ *  will be able to retrieve the Submission during the judge flow.
  * @author - johnny850807@gmail.com (Waterball)
  */
-public interface JudgeGirlVerdictFilterPlugin extends JudgeGirlPlugin {
-    JudgePluginTag.Type TYPE = JudgePluginTag.Type.FILTER;
-
-    void filter(VerdictIssuer verdictIssuer);
+public interface JudgeSubmissionAware {
+    void setSubmission(Submission submission);
 }

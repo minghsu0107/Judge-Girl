@@ -24,7 +24,7 @@ import tw.waterball.judgegirl.entities.submission.ProgramProfile;
 import tw.waterball.judgegirl.entities.submission.Submission;
 import tw.waterball.judgegirl.judger.CCJudger;
 import tw.waterball.judgegirl.judger.DefaultCCJudgerFactory;
-import tw.waterball.judgegirl.plugins.impl.match.AllMatchPolicyPlugin;
+import tw.waterball.judgegirl.plugins.impl.match.AllMatchPolicy;
 import tw.waterball.judgegirl.problemapi.clients.ProblemServiceDriver;
 import tw.waterball.judgegirl.problemapi.views.ProblemView;
 import tw.waterball.judgegirl.submissionapi.clients.SubmissionServiceDriver;
@@ -53,7 +53,7 @@ public class PrefixSumTest {
             .id(problemId).title("Prefix Sum")
             .markdownDescription("Ignored")
             .judgeEnvSpec(judgeEnvSpec)
-            .outputMatchPolicyPluginTag(AllMatchPolicyPlugin.TAG)
+            .outputMatchPolicyPluginTag(AllMatchPolicy.TAG)
             .tag("Ignored")
             .submittedCodeSpec(new SubmittedCodeSpec(Language.C, "prefixsum-seq.c"))
             .providedCodesFileId("providedCodesFileId")

@@ -23,7 +23,7 @@ import java.util.Map;
 /**
  * @author - johnny850807@gmail.com (Waterball)
  */
-public interface JudgeGirlMatchPolicyPlugin extends JudgeGirlPlugin {
+public interface OutputMatchPolicy extends JudgeGirlPlugin {
     JudgePluginTag.Type TYPE = JudgePluginTag.Type.OUTPUT_MATCH_POLICY;
 
     /**

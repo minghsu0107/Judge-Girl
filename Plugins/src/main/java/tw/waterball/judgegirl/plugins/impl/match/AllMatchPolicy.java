@@ -16,32 +16,40 @@
 
 package tw.waterball.judgegirl.plugins.impl.match;
 
-import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import tw.waterball.judgegirl.entities.problem.JudgePluginTag;
 import tw.waterball.judgegirl.plugins.api.ParameterMeta;
-import tw.waterball.judgegirl.plugins.api.match.JudgeGirlMatchPolicyPlugin;
+import tw.waterball.judgegirl.plugins.api.match.OutputMatchPolicy;
 
+import java.io.FileInputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.Collections;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
- * Use the regex expression (stated in the expected output) to match the actual output.
+ * Match the actual output exactly as same as the content of expected output's,
+ * even any little differences in `lines` or `spaces` will lead to WA.
+ * <p>
+ * So it means literally `All Match` in every byte.
  *
  * @author - johnny850807@gmail.com (Waterball)
  */
-public class RegexMatchPolicyPlugin extends AbstractJudgeGirlMatchPolicyPlugin {
+public class AllMatchPolicy extends AbstractOutputMatchPolicy {
     public final static String GROUP = JUDGE_GIRL_GROUP;
-    public final static String NAME = "Regex";
-    public final static String DESCRIPTION = "Use the regex expression (stated in the expected output) to match the actual output.";
+    public final static String NAME = "All Match";
+    public final static String DESCRIPTION = "Assert the actual output exactly as same as the expected output, " +
+            "even any differences in `lines` or `spaces` will lead to WA.";
     public final static String VERSION = "1.0";
-    public final static JudgePluginTag TAG = new JudgePluginTag(JudgeGirlMatchPolicyPlugin.TYPE, GROUP, NAME, VERSION);
+    public final static JudgePluginTag TAG = new JudgePluginTag(OutputMatchPolicy.TYPE, GROUP, NAME, VERSION);
+    private boolean strictTrailingBreakLine = false;
 
-    public RegexMatchPolicyPlugin() {
+    public AllMatchPolicy() {
         super(Collections.emptyMap());
+    }
+
+    public void setStrictTrailingBreakLine(boolean strictTrailingBreakLine) {
+        this.strictTrailingBreakLine = strictTrailingBreakLine;
     }
 
     @Override
@@ -58,12 +66,11 @@ public class RegexMatchPolicyPlugin extends AbstractJudgeGirlMatchPolicyPlugin {
         return TAG;
     }
 
-
     @Override
     protected boolean onDetermineTwoFileContentMatches(Path actualFilePath, Path expectFilePath) throws Exception {
-        Pattern pattern = Pattern.compile(FileUtils.readFileToString(expectFilePath.toFile(), StandardCharsets.UTF_8));
-        String content = FileUtils.readFileToString(actualFilePath.toFile(), StandardCharsets.UTF_8);
-        Matcher matcher = pattern.matcher(content);
-        return matcher.matches();
+        // TODO strictTrailingBreakLine is not implemented yet
+        String actual = IOUtils.toString(new FileInputStream(actualFilePath.toFile()), StandardCharsets.US_ASCII);
+        String expected = IOUtils.toString(new FileInputStream(expectFilePath.toFile()), StandardCharsets.US_ASCII);
+        return actual.equals(expected);
     }
 }

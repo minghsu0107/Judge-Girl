@@ -27,9 +27,9 @@ import tw.waterball.judgegirl.commons.utils.ArrayUtils;
 import tw.waterball.judgegirl.commons.utils.ZipUtils;
 import tw.waterball.judgegirl.commons.utils.functional.ErrConsumer;
 import tw.waterball.judgegirl.entities.problem.*;
-import tw.waterball.judgegirl.plugins.api.match.JudgeGirlMatchPolicyPlugin;
-import tw.waterball.judgegirl.plugins.impl.match.AllMatchPolicyPlugin;
-import tw.waterball.judgegirl.plugins.impl.match.RegexMatchPolicyPlugin;
+import tw.waterball.judgegirl.plugins.api.match.OutputMatchPolicy;
+import tw.waterball.judgegirl.plugins.impl.match.AllMatchPolicy;
+import tw.waterball.judgegirl.plugins.impl.match.RegexMatchPolicy;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -61,8 +61,8 @@ public class MigrateOneProblem implements CommandLineRunner {
     private MongoTemplate mongoTemplate;
     private GridFsTemplate gridFsTemplate;
     private ObjectMapper objectMapper;
-    private JudgeGirlMatchPolicyPlugin[] matchPolicyPlugins =
-            {new AllMatchPolicyPlugin(), new RegexMatchPolicyPlugin()};
+    private OutputMatchPolicy[] matchPolicyPlugins =
+            {new AllMatchPolicy(), new RegexMatchPolicy()};
 
     public static void main(String[] args) {
         SpringApplication.run(MigrateOneProblem.class, args);

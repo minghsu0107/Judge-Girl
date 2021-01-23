@@ -20,8 +20,11 @@ import tw.waterball.judgegirl.entities.problem.Problem;
 import tw.waterball.judgegirl.entities.problem.Testcase;
 import tw.waterball.judgegirl.entities.submission.VerdictIssuer;
 import tw.waterball.judgegirl.plugins.api.*;
-import tw.waterball.judgegirl.plugins.api.codeinspection.JudgeGirlSourceCodeFilterPlugin;
-import tw.waterball.judgegirl.plugins.api.match.JudgeGirlMatchPolicyPlugin;
+import tw.waterball.judgegirl.plugins.api.awareness.JudgeProblemAware;
+import tw.waterball.judgegirl.plugins.api.awareness.JudgeSubmissionAware;
+import tw.waterball.judgegirl.plugins.api.awareness.JudgeTestcasesAware;
+import tw.waterball.judgegirl.plugins.api.JudgeSourceCodeFilter;
+import tw.waterball.judgegirl.plugins.api.match.OutputMatchPolicy;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -47,23 +50,27 @@ public abstract class PluginExtendedJudger extends Judger {
         var plugins = new ArrayList<JudgePluginTag>();
         plugins.add(problem.getOutputMatchPolicyPluginTag());
         plugins.addAll(problem.getFilterPluginTags());
+        handlePluginAwareness(judgeContext, problem, plugins);
+    }
+
+    private void handlePluginAwareness(JudgeContext judgeContext, Problem problem, ArrayList<JudgePluginTag> plugins) {
         for (JudgePluginTag tag : plugins) {
             JudgeGirlPlugin plugin = pluginLocator.locate(tag);
-            if (plugin instanceof ProblemAware) {
-                ((ProblemAware) plugin).setProblem(problem);
+            if (plugin instanceof JudgeProblemAware) {
+                ((JudgeProblemAware) plugin).setProblem(problem);
             }
-            if (plugin instanceof TestcasesAware) {
-                ((TestcasesAware) plugin).setTestcases(judgeContext.testcases);
+            if (plugin instanceof JudgeTestcasesAware) {
+                ((JudgeTestcasesAware) plugin).setTestcases(judgeContext.testcases);
             }
-            if (plugin instanceof SubmissionAware) {
-                ((SubmissionAware) plugin).setSubmission(judgeContext.submission);
+            if (plugin instanceof JudgeSubmissionAware) {
+                ((JudgeSubmissionAware) plugin).setSubmission(judgeContext.submission);
             }
         }
     }
 
     @Override
     protected boolean isProgramOutputAllCorrect(Testcase testcase) {
-        JudgeGirlMatchPolicyPlugin matchPolicyPlugin =
+        OutputMatchPolicy matchPolicyPlugin =
                 locateMatchPolicyPlugin(getProblem().getOutputMatchPolicyPluginTag());
         return matchPolicyPlugin.isMatch(
                 getActualStandardOutputPath(testcase),
@@ -72,8 +79,8 @@ public abstract class PluginExtendedJudger extends Judger {
         );
     }
 
-    private JudgeGirlMatchPolicyPlugin locateMatchPolicyPlugin(JudgePluginTag tag) {
-        return (JudgeGirlMatchPolicyPlugin) pluginLocator.locate(tag);
+    private OutputMatchPolicy locateMatchPolicyPlugin(JudgePluginTag tag) {
+        return (OutputMatchPolicy) pluginLocator.locate(tag);
     }
 
     protected abstract Path getActualStandardOutputPath(Testcase testcase);
@@ -89,7 +96,7 @@ public abstract class PluginExtendedJudger extends Judger {
     protected void doSourceCodeFilteringForTag(JudgePluginTag tag) {
         logger.info("doSourceCodeFilteringForTag: {}.", tag);
         try {
-            JudgeGirlSourceCodeFilterPlugin plugin = (JudgeGirlSourceCodeFilterPlugin) pluginLocator.locate(tag);
+            JudgeSourceCodeFilter plugin = (JudgeSourceCodeFilter) pluginLocator.locate(tag);
             plugin.filter(getSourceRootPath());
         } catch (Exception err) {
             logger.error("Error occurs on source code filtering for the tag {}", tag, err);
@@ -100,7 +107,7 @@ public abstract class PluginExtendedJudger extends Judger {
     protected void doVerdictFilteringForTag(VerdictIssuer verdictIssuer, JudgePluginTag tag) {
         logger.info("doVerdictFilteringForTag: {}.", tag);
         try {
-            JudgeGirlVerdictFilterPlugin plugin = (JudgeGirlVerdictFilterPlugin) pluginLocator.locate(tag);
+            JudgeVerdictFilter plugin = (JudgeVerdictFilter) pluginLocator.locate(tag);
             plugin.filter(verdictIssuer);
         } catch (Exception err) {
             logger.error("Error occurs on verdict filtering for the tag {}", tag, err);

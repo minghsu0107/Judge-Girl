@@ -18,7 +18,7 @@ package tw.waterball.judgegirl.plugins.impl.match;
 
 import tw.waterball.judgegirl.plugins.api.AbstractJudgeGirlPlugin;
 import tw.waterball.judgegirl.plugins.api.exceptions.MatchPolicyPluginException;
-import tw.waterball.judgegirl.plugins.api.match.JudgeGirlMatchPolicyPlugin;
+import tw.waterball.judgegirl.plugins.api.match.OutputMatchPolicy;
 
 import java.nio.file.Path;
 import java.util.Map;
@@ -28,11 +28,11 @@ import java.util.Map;
  *
  * @author - johnny850807@gmail.com (Waterball)
  */
-public abstract class AbstractJudgeGirlMatchPolicyPlugin extends AbstractJudgeGirlPlugin
-        implements JudgeGirlMatchPolicyPlugin {
+public abstract class AbstractOutputMatchPolicy extends AbstractJudgeGirlPlugin
+        implements OutputMatchPolicy {
     protected Map<String, String> parameters;
 
-    public AbstractJudgeGirlMatchPolicyPlugin(Map<String, String> parameters) {
+    public AbstractOutputMatchPolicy(Map<String, String> parameters) {
         super(parameters);
         this.parameters = parameters;
     }

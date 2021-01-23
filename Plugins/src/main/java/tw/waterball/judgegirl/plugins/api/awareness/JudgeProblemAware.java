@@ -11,15 +11,15 @@
  *   limitations under the License.
  */
 
-package tw.waterball.judgegirl.plugins.api;
+package tw.waterball.judgegirl.plugins.api.awareness;
 
-import tw.waterball.judgegirl.entities.problem.Testcase;
-
-import java.util.List;
+import tw.waterball.judgegirl.entities.problem.Problem;
 
 /**
+ * The JudgeGirlPlugin that inherits this interface
+ *  will be able to retrieve the Problem during the judge flow.
  * @author - johnny850807@gmail.com (Waterball)
  */
-public interface TestcasesAware {
-    void setTestcases(List<Testcase> testcases);
+public interface JudgeProblemAware {
+    void setProblem(Problem problem);
 }

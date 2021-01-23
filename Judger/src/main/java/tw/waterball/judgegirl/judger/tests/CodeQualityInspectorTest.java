@@ -22,11 +22,11 @@ import tw.waterball.judgegirl.entities.problem.*;
 import tw.waterball.judgegirl.entities.submission.Submission;
 import tw.waterball.judgegirl.judger.CCJudger;
 import tw.waterball.judgegirl.judger.DefaultCCJudgerFactory;
-import tw.waterball.judgegirl.plugins.impl.cqi.CodeQualityInspectionPlugin;
+import tw.waterball.judgegirl.plugins.impl.cqi.CodeQualityInspectorJudge;
 import tw.waterball.judgegirl.plugins.impl.cqi.CodeQualityInspectionReport;
 import tw.waterball.judgegirl.plugins.impl.cqi.CodingStyleAnalyzeReport;
 import tw.waterball.judgegirl.plugins.impl.cqi.CyclomaticComplexityReport;
-import tw.waterball.judgegirl.plugins.impl.match.AllMatchPolicyPlugin;
+import tw.waterball.judgegirl.plugins.impl.match.AllMatchPolicy;
 import tw.waterball.judgegirl.problemapi.clients.ProblemServiceDriver;
 import tw.waterball.judgegirl.problemapi.views.ProblemView;
 import tw.waterball.judgegirl.submissionapi.clients.SubmissionServiceDriver;
@@ -48,7 +48,7 @@ import static org.mockito.Mockito.*;
  *
  * @author - johnny850807@gmail.com (Waterball)
  */
-public class CodeQualityInspectionPluginTest {
+public class CodeQualityInspectorTest {
     private final static String zippedProvidedCodesFileName = "/judgeCases/prefixsum/provided.zip";
     private final static String zippedTestcaseIOsFileName = "/judgeCases/prefixsum/io.zip";
     private final static String zippedSubmittedCodesFileNameFormat = "/judgeCases/prefixsum/%s/submitted.zip";
@@ -65,9 +65,9 @@ public class CodeQualityInspectionPluginTest {
             .id(problemId).title("Prefix Sum")
             .markdownDescription("Ignored")
             .judgeEnvSpec(judgeEnvSpec)
-            .outputMatchPolicyPluginTag(AllMatchPolicyPlugin.TAG)
+            .outputMatchPolicyPluginTag(AllMatchPolicy.TAG)
             .tag("Ignored")
-            .filterPluginTag(CodeQualityInspectionPlugin.TAG)
+            .filterPluginTag(CodeQualityInspectorJudge.TAG)
             .submittedCodeSpec(new SubmittedCodeSpec(Language.C, "prefixsum-seq.c"))
             .providedCodesFileId("providedCodesFileId")
             .testcaseIOsFileId("testcaseIOsFileId")

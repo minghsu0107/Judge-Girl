@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RegexMatchPolicyPluginTest {
-    private RegexMatchPolicyPlugin policyPlugin = new RegexMatchPolicyPlugin();
+    private RegexMatchPolicy policyPlugin = new RegexMatchPolicy();
 
     @Test
     void testAC() {

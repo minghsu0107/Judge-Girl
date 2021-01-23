@@ -13,11 +13,12 @@
 
 package tw.waterball.judgegirl.plugins.api;
 
-import tw.waterball.judgegirl.entities.problem.Problem;
+import java.nio.file.Path;
 
 /**
  * @author - johnny850807@gmail.com (Waterball)
+ * @author - ryan01234keroro56789@gmail.com (Giver)
  */
-public interface ProblemAware {
-    void setProblem(Problem problem);
+public interface JudgeSourceCodeFilter extends JudgeGirlPlugin {
+    void filter(Path sourceRootPath);
 }

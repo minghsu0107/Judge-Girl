@@ -14,9 +14,9 @@
 package tw.waterball.judgegirl.plugins;
 
 import tw.waterball.judgegirl.plugins.api.JudgeGirlPlugin;
-import tw.waterball.judgegirl.plugins.impl.cqi.CodeQualityInspectionPlugin;
-import tw.waterball.judgegirl.plugins.impl.match.AllMatchPolicyPlugin;
-import tw.waterball.judgegirl.plugins.impl.match.RegexMatchPolicyPlugin;
+import tw.waterball.judgegirl.plugins.impl.cqi.CodeQualityInspectorJudge;
+import tw.waterball.judgegirl.plugins.impl.match.AllMatchPolicy;
+import tw.waterball.judgegirl.plugins.impl.match.RegexMatchPolicy;
 
 import java.util.List;
 
@@ -27,8 +27,8 @@ import static java.util.Arrays.asList;
  */
 public class Plugins {
     private static List<JudgeGirlPlugin> DEFAULT_PLUGINS = asList(
-            new AllMatchPolicyPlugin(), new RegexMatchPolicyPlugin(),
-            new CodeQualityInspectionPlugin());
+            new AllMatchPolicy(), new RegexMatchPolicy(),
+            new CodeQualityInspectorJudge());
 
     public static List<JudgeGirlPlugin> getDefaultPlugins() {
         return DEFAULT_PLUGINS;

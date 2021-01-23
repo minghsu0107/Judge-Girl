@@ -18,7 +18,7 @@ import tw.waterball.judgegirl.entities.problem.JudgePluginTag;
 /**
  * @author - johnny850807@gmail.com (Waterball)
  */
-public abstract class AbstractJudgeGirlVerdictFilterPlugin
-        extends AbstractJudgeGirlPlugin implements JudgeGirlVerdictFilterPlugin {
+public abstract class AbstractJudgeVerdictFilter
+        extends AbstractJudgeGirlPlugin implements JudgeVerdictFilter {
     protected final JudgePluginTag.Type type = JudgePluginTag.Type.FILTER;
 }

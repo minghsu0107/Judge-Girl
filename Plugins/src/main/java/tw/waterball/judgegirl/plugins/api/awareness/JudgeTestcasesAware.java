@@ -11,16 +11,17 @@
  *   limitations under the License.
  */
 
-package tw.waterball.judgegirl.plugins.api.codeinspection;
+package tw.waterball.judgegirl.plugins.api.awareness;
 
-import tw.waterball.judgegirl.plugins.api.JudgeGirlPlugin;
+import tw.waterball.judgegirl.entities.problem.Testcase;
 
-import java.nio.file.Path;
+import java.util.List;
 
 /**
+ * The JudgeGirlPlugin that inherits this interface
+ *  will be able to retrieve the Testcases during the judge flow.
  * @author - johnny850807@gmail.com (Waterball)
- * @author - ryan01234keroro56789@gmail.com (Giver)
  */
-public interface JudgeGirlSourceCodeFilterPlugin extends JudgeGirlPlugin {
-    void filter(Path sourceRootPath);
+public interface JudgeTestcasesAware {
+    void setTestcases(List<Testcase> testcases);
 }

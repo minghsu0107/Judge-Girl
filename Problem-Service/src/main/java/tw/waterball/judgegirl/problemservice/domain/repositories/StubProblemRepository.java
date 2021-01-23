@@ -16,7 +16,7 @@ package tw.waterball.judgegirl.problemservice.domain.repositories;
 import tw.waterball.judgegirl.commons.models.files.FileResource;
 import tw.waterball.judgegirl.commons.utils.ZipUtils;
 import tw.waterball.judgegirl.entities.problem.*;
-import tw.waterball.judgegirl.plugins.impl.match.AllMatchPolicyPlugin;
+import tw.waterball.judgegirl.plugins.impl.match.AllMatchPolicy;
 
 import javax.inject.Named;
 import java.io.ByteArrayInputStream;
@@ -77,7 +77,7 @@ public class StubProblemRepository implements ProblemRepository {
                     " numbers $a/b$ and $c/d$, by comparing $a \\* d$ and $b \\* c$ instead, when both $b$ and $d$ are positive integers.\n" +
                     "![Test Image](https://i.imgur.com/E9hmeDw.png)")
             .judgeEnvSpec(new JudgeEnvSpec(Language.C, JudgeEnv.NORMAL, 0.5f, 0))
-            .outputMatchPolicyPluginTag(AllMatchPolicyPlugin.TAG)
+            .outputMatchPolicyPluginTag(AllMatchPolicy.TAG)
             .tag("tag1").tag("tag2")
             .submittedCodeSpec(new SubmittedCodeSpec(Language.C, "main.c"))
             .submittedCodeSpec(new SubmittedCodeSpec(Language.C, "function.c"))

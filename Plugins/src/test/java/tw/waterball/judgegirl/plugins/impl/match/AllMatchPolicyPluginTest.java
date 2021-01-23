@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class AllMatchPolicyPluginTest {
-    private AllMatchPolicyPlugin policyPlugin = new AllMatchPolicyPlugin();
+    private AllMatchPolicy policyPlugin = new AllMatchPolicy();
 
     @Test
     void testAC() {

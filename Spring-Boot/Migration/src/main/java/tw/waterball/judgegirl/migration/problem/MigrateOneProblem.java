@@ -13,11 +13,8 @@
 
 package tw.waterball.judgegirl.migration.problem;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -33,7 +30,6 @@ import tw.waterball.judgegirl.plugins.api.match.JudgeGirlMatchPolicyPlugin;
 import tw.waterball.judgegirl.plugins.impl.match.AllMatchPolicyPlugin;
 import tw.waterball.judgegirl.plugins.impl.match.RegexMatchPolicyPlugin;
 
-import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -53,10 +49,10 @@ import static tw.waterball.judgegirl.migration.problem.NewJudgeGirlLayoutManipul
  */
 @SuppressWarnings("SameParameterValue")
 @SpringBootApplication
-public class MigrateOneProblem implements CommandLineRunner {
+public class MigrateOneProblem {
     private static Logger logger = LogManager.getLogger(MigrateOneProblem.class);
 
-    private InputStrategy in;
+    private Input in;
     private Problem problem;
     private List<Testcase> testcases;
     private MongoTemplate mongoTemplate;
@@ -69,24 +65,13 @@ public class MigrateOneProblem implements CommandLineRunner {
         SpringApplication.run(MigrateOneProblem.class, args);
     }
 
-    @PostConstruct
-    public void objectMapperConfig(ObjectMapper objectMapper) {
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-    }
 
-    public MigrateOneProblem(InputStrategy in, MongoTemplate mongoTemplate,
+    public MigrateOneProblem(Input in, MongoTemplate mongoTemplate,
                              GridFsTemplate gridFsTemplate, NewJudgeGirlLayoutManipulator layoutManipulator) {
         this.in = in;
         this.mongoTemplate = mongoTemplate;
         this.gridFsTemplate = gridFsTemplate;
         this.layoutManipulator = layoutManipulator;
-    }
-
-    @Override
-    public void run(String... args) {
-        while (true) {
-            this.execute(10);
-        }
     }
 
     public void execute(int repeatOnFailureTime) {
@@ -217,7 +202,7 @@ public class MigrateOneProblem implements CommandLineRunner {
         logger.info("Saved testcases ...");
     }
 
-    public interface InputStrategy {
+    public interface Input {
         String problemDirPath();
 
         JudgeEnvSpec judgeEnvSpec();
